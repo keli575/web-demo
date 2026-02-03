@@ -2,56 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple Geometry Dash</title>
+  <title>Simple Login</title>
   <style>
     body {
-      margin: 0;
-      background: #111;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: white;
-      font-family: Arial, sans-serif;
     }
-    canvas {
-      background: #222;
-      border: 3px solid #0ff;
+    .login-box {
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      width: 250px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      cursor: pointer;
+    }
+    p {
+      color: red;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
 
-<canvas id="game" width="800" height="300"></canvas>
+  <div class="login-box">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="message"></p>
+  </div>
 
-<script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-let gravity = 0.7;
-let speed = 6;
-let score = 0;
-let gameOver = false;
-
-const player = {
-  x: 100,
-  y: 220,
-  size: 30,
-  velocityY: 0,
-  jump() {
-    if (this.y === 220) {
-      this.velocityY = -13;
+      // hardcoded credentials
+      if (username === "admin" && password === "1234") {
+        alert("Login successful!");
+      } else {
+        document.getElementById("message").innerText = "Invalid login";
+      }
     }
-  },
-  update() {
-    this.velocityY += gravity;
-    this.y += this.velocityY;
+  </script>
 
-    if (this.y > 220) {
-      this.y = 220;
-      this.velocityY = 0;
-    }
-  },
-  draw() {
-    ctx.fillStyle = "#0ff";
-    ctx.fillRect(this.x, this.y, this.size, this.size);
+</body>
+</html>
