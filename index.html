@@ -1,131 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dino Game</title>
+  <meta charset="UTF-8">
+  <title>Lucky 9 Card Game</title>
   <style>
     body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #f7f7f7;
       font-family: Arial, sans-serif;
+      background: #0b6623;
+      color: white;
+      text-align: center;
+      padding-top: 50px;
     }
 
-    canvas {
-      background: white;
-      border: 2px solid #333;
+    .cards {
+      font-size: 24px;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    .result {
+      font-size: 22px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <canvas id="game" width="800" height="200"></canvas>
 
-  <script>
-    const canvas = document.getElementById("game");
-    const ctx = canvas.getContext("2d");
+  <h1>🍀 Lucky 9 Card Game</h1>
 
-    let gameSpeed = 6;
-    let gravity = 0.6;
-    let score = 0;
-    let gameOver = false;
+  <div>
+    <h2>Player</h2>
+    <div id="playerCards" class="cards"></div>
+    <div id="playerScore"></div>
+  </div>
 
-    const dino = {
-      x: 50,
-      y: 150,
-      width: 40,
-      height: 40,
-      yVelocity: 0,
-      jump() {
-        if (this.y === 150) {
-          this.yVelocity = -12;
-        }
-      },
-      update() {
-        this.yVelocity += gravity;
-        this.y += this.yVelocity;
+  <div>
+    <h2>Dealer</h2>
+    <div id="dealerCards" class="cards"></div>
+    <div id="dealerScore"></div>
+  </div>
 
-        if (this.y > 150) {
-          this.y = 150;
-          this.yVelocity = 0;
-        }
-      },
-      draw() {
-        ctx.fillStyle = "#333";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
-    };
+  <br>
+  <button onclick="playGame()">Deal Cards</button>
 
-    const cactus = {
-      x: 800,
-      y: 160,
-      width: 20,
-      height: 30,
-      reset() {
-        this.x = 800 + Math.random() * 300;
-      },
-      update() {
-        this.x -= gameSpeed;
-        if (this.x + this.width < 0) {
-          this.reset();
-          score++;
-        }
-      },
-      draw() {
-        ctx.fillStyle = "green";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
-    };
+  <div id="result" class="result"></div>
 
-    function detectCollision() {
-      return (
-        dino.x < cactus.x + cactus.width &&
-        dino.x + dino.width > cactus.x &&
-        dino.y < cactus.y + cactus.height &&
-        dino.y + dino.height > cactus.y
-      );
-    }
-
-    function drawScore() {
-      ctx.fillStyle = "#000";
-      ctx.font = "16px Arial";
-      ctx.fillText("Score: " + score, 10, 20);
-    }
-
-    function gameLoop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (!gameOver) {
-        dino.update();
-        cactus.update();
-
-        if (detectCollision()) {
-          gameOver = true;
-        }
-
-        dino.draw();
-        cactus.draw();
-        drawScore();
-
-        requestAnimationFrame(gameLoop);
-      } else {
-        ctx.fillStyle = "red";
-        ctx.font = "30px Arial";
-        ctx.fillText("Game Over", 300, 100);
-        ctx.font = "16px Arial";
-        ctx.fillText("Refresh to restart", 320, 130);
-      }
-    }
-
-    document.addEventListener("keydown", e => {
-      if (e.code === "Space") dino.jump();
-    });
-
-    document.addEventListener("click", () => dino.jump());
-
-    gameLoop();
-  </script>
-</body>
-</html>
+  <s
